@@ -76,7 +76,6 @@ type Consul interface {
 	MattermostNotifier() *notifier.MattermostNotifier
 	MattermostWebhookNotifier() *notifier.MattermostWebhookNotifier
 	PagerDutyNotifier() *notifier.PagerDutyNotifier
-	HipChatNotifier() *notifier.HipChatNotifier
 	OpsGenieNotifier() *notifier.OpsGenieNotifier
 	AwsSnsNotifier() *notifier.AwsSnsNotifier
 	VictorOpsNotifier() *notifier.VictorOpsNotifier
@@ -151,11 +150,6 @@ func DefaultAlertConfig() *ConsulAlertConfig {
 		Enabled: false,
 	}
 
-	hipchat := &notifier.HipChatNotifier{
-		Enabled:     false,
-		ClusterName: "Consul-Alerts",
-	}
-
 	opsgenie := &notifier.OpsGenieNotifier{
 		Enabled:     false,
 		ClusterName: "Consul-Alerts",
@@ -173,8 +167,8 @@ func DefaultAlertConfig() *ConsulAlertConfig {
 	httpEndpoint := &notifier.HttpEndpointNotifier{
 		Enabled:     false,
 		ClusterName: "Consul-Alerts",
-  }
-    
+	}
+
 	ilert := &notifier.ILertNotifier{
 		Enabled:             false,
 		IncidentKeyTemplate: "{{.Node}}:{{.Service}}:{{.Check}}",
@@ -188,7 +182,6 @@ func DefaultAlertConfig() *ConsulAlertConfig {
 		Mattermost:        mattermost,
 		MattermostWebhook: mattermostWebhook,
 		PagerDuty:         pagerduty,
-		HipChat:           hipchat,
 		OpsGenie:          opsgenie,
 		AwsSns:            awsSns,
 		VictorOps:         victorOps,

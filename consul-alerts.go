@@ -16,8 +16,8 @@ import (
 	"github.com/AcalephStorage/consul-alerts/consul"
 	"github.com/AcalephStorage/consul-alerts/notifier"
 
-	log "github.com/sirupsen/logrus"
 	"github.com/docopt/docopt-go"
+	log "github.com/sirupsen/logrus"
 )
 
 const version = "Consul Alerts 0.5.0"
@@ -245,7 +245,6 @@ func builtinNotifiers() map[string]notifier.Notifier {
 	mattermostNotifier := consulClient.MattermostNotifier()
 	mattermostWebhookNotifier := consulClient.MattermostWebhookNotifier()
 	pagerdutyNotifier := consulClient.PagerDutyNotifier()
-	hipchatNotifier := consulClient.HipChatNotifier()
 	opsgenieNotifier := consulClient.OpsGenieNotifier()
 	awssnsNotifier := consulClient.AwsSnsNotifier()
 	victoropsNotifier := consulClient.VictorOpsNotifier()
@@ -274,9 +273,6 @@ func builtinNotifiers() map[string]notifier.Notifier {
 	if pagerdutyNotifier.Enabled {
 		notifiers[pagerdutyNotifier.NotifierName()] = pagerdutyNotifier
 	}
-	if hipchatNotifier.Enabled {
-		notifiers[hipchatNotifier.NotifierName()] = hipchatNotifier
-	}
 	if opsgenieNotifier.Enabled {
 		notifiers[opsgenieNotifier.NotifierName()] = opsgenieNotifier
 	}
@@ -288,7 +284,7 @@ func builtinNotifiers() map[string]notifier.Notifier {
 	}
 	if httpEndpointNotifier.Enabled {
 		notifiers[httpEndpointNotifier.NotifierName()] = httpEndpointNotifier
-  }
+	}
 	if ilertNotifier.Enabled {
 		notifiers[ilertNotifier.NotifierName()] = ilertNotifier
 	}

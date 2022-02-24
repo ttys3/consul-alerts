@@ -12,8 +12,8 @@ import (
 
 	notifier "github.com/AcalephStorage/consul-alerts/notifier"
 
-	log "github.com/sirupsen/logrus"
 	consulapi "github.com/hashicorp/consul/api"
+	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -198,20 +198,6 @@ func (c *ConsulAlertClient) LoadConfig() {
 				valErr = loadCustomValue(&config.Notifiers.PagerDuty.MaxRetry, val, ConfigTypeInt)
 			case "consul-alerts/config/notifiers/pagerduty/retry-base-interval":
 				valErr = loadCustomValue(&config.Notifiers.PagerDuty.RetryBaseInterval, val, ConfigTypeInt)
-
-				// hipchat notfier config
-			case "consul-alerts/config/notifiers/hipchat/enabled":
-				valErr = loadCustomValue(&config.Notifiers.HipChat.Enabled, val, ConfigTypeBool)
-			case "consul-alerts/config/notifiers/hipchat/cluster-name":
-				valErr = loadCustomValue(&config.Notifiers.HipChat.ClusterName, val, ConfigTypeString)
-			case "consul-alerts/config/notifiers/hipchat/room-id":
-				valErr = loadCustomValue(&config.Notifiers.HipChat.RoomId, val, ConfigTypeString)
-			case "consul-alerts/config/notifiers/hipchat/auth-token":
-				valErr = loadCustomValue(&config.Notifiers.HipChat.AuthToken, val, ConfigTypeString)
-			case "consul-alerts/config/notifiers/hipchat/base-url":
-				valErr = loadCustomValue(&config.Notifiers.HipChat.BaseURL, val, ConfigTypeString)
-			case "consul-alerts/config/notifiers/hipchat/from":
-				valErr = loadCustomValue(&config.Notifiers.HipChat.From, val, ConfigTypeString)
 
 				// OpsGenie notifier config
 			case "consul-alerts/config/notifiers/opsgenie/enabled":
@@ -544,10 +530,6 @@ func (c *ConsulAlertClient) MattermostWebhookNotifier() *notifier.MattermostWebh
 
 func (c *ConsulAlertClient) PagerDutyNotifier() *notifier.PagerDutyNotifier {
 	return c.config.Notifiers.PagerDuty
-}
-
-func (c *ConsulAlertClient) HipChatNotifier() *notifier.HipChatNotifier {
-	return c.config.Notifiers.HipChat
 }
 
 func (c *ConsulAlertClient) OpsGenieNotifier() *notifier.OpsGenieNotifier {
