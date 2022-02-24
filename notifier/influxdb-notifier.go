@@ -2,7 +2,7 @@ package notifier
 
 import (
 	log "github.com/sirupsen/logrus"
-	"github.com/influxdb/influxdb/client"
+	"github.com/influxdata/influxdb/client"
 )
 
 type InfluxdbNotifier struct {
