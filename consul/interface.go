@@ -71,7 +71,6 @@ type Consul interface {
 
 	EmailNotifier() *notifier.EmailNotifier
 	LogNotifier() *notifier.LogNotifier
-	InfluxdbNotifier() *notifier.InfluxdbNotifier
 	SlackNotifier() *notifier.SlackNotifier
 	MattermostNotifier() *notifier.MattermostNotifier
 	MattermostWebhookNotifier() *notifier.MattermostWebhookNotifier
@@ -126,11 +125,6 @@ func DefaultAlertConfig() *ConsulAlertConfig {
 		Path:    "/tmp/consul-notifications.log",
 	}
 
-	influxdb := &notifier.InfluxdbNotifier{
-		Enabled:    false,
-		SeriesName: "consul-alerts",
-	}
-
 	slack := &notifier.SlackNotifier{
 		Enabled:     false,
 		ClusterName: "Consul-Alerts",
@@ -177,7 +171,6 @@ func DefaultAlertConfig() *ConsulAlertConfig {
 	notifiers := &notifier.Notifiers{
 		Email:             email,
 		Log:               log,
-		Influxdb:          influxdb,
 		Slack:             slack,
 		Mattermost:        mattermost,
 		MattermostWebhook: mattermostWebhook,

@@ -43,7 +43,6 @@ type Notifier interface {
 type Notifiers struct {
 	Email             *EmailNotifier             `json:"email"`
 	Log               *LogNotifier               `json:"log"`
-	Influxdb          *InfluxdbNotifier          `json:"influxdb"`
 	Slack             *SlackNotifier             `json:"slack"`
 	Mattermost        *MattermostNotifier        `json:"mattermost"`
 	MattermostWebhook *MattermostWebhookNotifier `json:"mattermost-webhook"`
@@ -62,8 +61,6 @@ func (n Notifiers) GetNotifier(name string) (Notifier, bool) {
 		return n.Email, true
 	case n.Log != nil && n.Log.NotifierName() == name:
 		return n.Log, true
-	case n.Influxdb != nil && n.Influxdb.NotifierName() == name:
-		return n.Influxdb, true
 	case n.Slack != nil && n.Slack.NotifierName() == name:
 		return n.Slack, true
 	case n.Mattermost != nil && n.Mattermost.NotifierName() == name:

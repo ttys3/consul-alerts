@@ -154,12 +154,6 @@ func TestGetProfileInfo(t *testing.T) {
 			NotifProfile:   "checks",
 			NotifSelection: "checks/checkID",
 		},
-		{
-			Interval:       99,
-			NotifiersList:  map[string]bool{"influxdb": true},
-			NotifProfile:   "services",
-			NotifSelection: "services/serviceID",
-		},
 	}
 	for _, s := range testCombinations {
 		profileInfo := ProfileInfo{Interval: s.Interval, NotifList: s.NotifiersList}

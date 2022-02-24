@@ -121,20 +121,6 @@ func (c *ConsulAlertClient) LoadConfig() {
 			case "consul-alerts/config/notifiers/log/path":
 				valErr = loadCustomValue(&config.Notifiers.Log.Path, val, ConfigTypeString)
 
-				// influxdb notifier config
-			case "consul-alerts/config/notifiers/influxdb/enabled":
-				valErr = loadCustomValue(&config.Notifiers.Influxdb.Enabled, val, ConfigTypeBool)
-			case "consul-alerts/config/notifiers/influxdb/host":
-				valErr = loadCustomValue(&config.Notifiers.Influxdb.Host, val, ConfigTypeString)
-			case "consul-alerts/config/notifiers/influxdb/username":
-				valErr = loadCustomValue(&config.Notifiers.Influxdb.Username, val, ConfigTypeString)
-			case "consul-alerts/config/notifiers/influxdb/password":
-				valErr = loadCustomValue(&config.Notifiers.Influxdb.Password, val, ConfigTypeString)
-			case "consul-alerts/config/notifiers/influxdb/database":
-				valErr = loadCustomValue(&config.Notifiers.Influxdb.Database, val, ConfigTypeString)
-			case "consul-alerts/config/notifiers/influxdb/series-name":
-				valErr = loadCustomValue(&config.Notifiers.Influxdb.SeriesName, val, ConfigTypeString)
-
 				// slack notfier config
 			case "consul-alerts/config/notifiers/slack/enabled":
 				valErr = loadCustomValue(&config.Notifiers.Slack.Enabled, val, ConfigTypeBool)
@@ -346,7 +332,16 @@ func (c *ConsulAlertClient) UpdateCheckData() {
 		status, _, _ := kvApi.Get(key, nil)
 		existing := status != nil
 
-		localHealth := Check(*health)
+		localHealth := Check{
+			Node:        health.Node,
+			CheckID:     health.CheckID,
+			Name:        health.Name,
+			Status:      health.Status,
+			Notes:       health.Notes,
+			Output:      health.Output,
+			ServiceID:   health.ServiceID,
+			ServiceName: health.ServiceName,
+		}
 
 		if c.IsBlacklisted(&localHealth) {
 			log.Printf("%s:%s:%s is blacklisted.", node, service, check)
@@ -510,10 +505,6 @@ func (c *ConsulAlertClient) EmailNotifier() *notifier.EmailNotifier {
 
 func (c *ConsulAlertClient) LogNotifier() *notifier.LogNotifier {
 	return c.config.Notifiers.Log
-}
-
-func (c *ConsulAlertClient) InfluxdbNotifier() *notifier.InfluxdbNotifier {
-	return c.config.Notifiers.Influxdb
 }
 
 func (c *ConsulAlertClient) SlackNotifier() *notifier.SlackNotifier {
